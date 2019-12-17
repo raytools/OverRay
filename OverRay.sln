@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29318.209
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OverRay.UI", "OverRay.UI\OverRay.UI.csproj", "{9240F6C6-7613-468D-B6D2-F139FE743FEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OverRay.Hook", "OverRay.Hook\OverRay.Hook.csproj", "{FE2EC0A8-5679-489F-91E6-1F878057AFA9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9240F6C6-7613-468D-B6D2-F139FE743FEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9240F6C6-7613-468D-B6D2-F139FE743FEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9240F6C6-7613-468D-B6D2-F139FE743FEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9240F6C6-7613-468D-B6D2-F139FE743FEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE2EC0A8-5679-489F-91E6-1F878057AFA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE2EC0A8-5679-489F-91E6-1F878057AFA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE2EC0A8-5679-489F-91E6-1F878057AFA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE2EC0A8-5679-489F-91E6-1F878057AFA9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {169FC889-8F09-419A-9B96-8064692BD855}
+	EndGlobalSection
+EndGlobal
