@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using OverRay.Hook.Structs;
+using OverRay.Hook.Utils;
 
 namespace OverRay.Hook
 {
@@ -39,12 +40,10 @@ namespace OverRay.Hook
                 alphaByte = alpha
             };
 
-            IntPtr textPtr = Marshal.AllocHGlobal(Marshal.SizeOf(textObject));
-            Marshal.StructureToPtr(textObject, textPtr, false);
-
-            ODrawText(0x5004d4, textPtr);
-
-            Marshal.FreeHGlobal(textPtr);
+            using (Ptr textPtr = new Ptr(textObject))
+            {
+                ODrawText(0x5004d4, textPtr);
+            }
         }
     }
 }
