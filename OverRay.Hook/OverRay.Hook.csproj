@@ -49,12 +49,15 @@
   <ItemGroup>
     <Compile Include="Detour.cs" />
     <Compile Include="GameFunctions.cs" />
+    <Compile Include="GameFunctions\fn_p_stCode4PersoLePlusProche.cs" />
     <Compile Include="GameFunctions\GetCurrentLevelName.cs" />
     <Compile Include="GameFunctions\VAddParticle.cs" />
     <Compile Include="GameFunctions\VCreatePart.cs" />
     <Compile Include="GameFunctions\DrawText.cs" />
     <Compile Include="GameFunctions\VEngine.cs" />
+    <Compile Include="Structs\EngineObject.cs" />
     <Compile Include="Structs\Text2D.cs" />
+    <Compile Include="Structs\SuperObject.cs" />
     <Compile Include="Structs\Vector3.cs" />
     <Compile Include="Text.cs" />
     <Compile Include="Utils\Log.cs" />
