@@ -1,4 +1,4 @@
-﻿namespace OverRay.Hook
+﻿namespace OverRay.Hook.Utils
 {
     public static class Text
     {

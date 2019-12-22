@@ -18,7 +18,9 @@ namespace OverRay.Hook
             try
             {
                 Text2D text = Marshal.PtrToStructure<Text2D>(textStruct);
-                Interface.ReceivedMessage($"Text: {text.text}");
+                Interface.WriteLog($"Text: {text.text} alphaByte: {text.alphaByte} gap11: {text.gap11}");
+                Interface.WriteLog($"highlight: {text.highlight} options: {text.options}");
+                Interface.WriteLog($"dword14: {text.dword14} flag3: {text.flag3}");
                 Marshal.StructureToPtr(text, textStruct, true);
             }
             catch (Exception e)
@@ -42,7 +44,7 @@ namespace OverRay.Hook
 
             using (Ptr textPtr = new Ptr(textObject))
             {
-                ODrawText(0x5004d4, textPtr);
+                ODrawText(0x5004D4, textPtr);
             }
         }
     }

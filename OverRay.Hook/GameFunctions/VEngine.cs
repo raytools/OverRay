@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using OverRay.Hook.Structs;
 
 namespace OverRay.Hook
 {
@@ -15,34 +14,29 @@ namespace OverRay.Hook
         internal byte HVEngine()
         {
             byte engine = OVEngine();
+
             try
             {
-                IntPtr coordinatesPtr = Memory.GetPointerAtOffset((IntPtr)0x500560, 0x224, 0x310, 0x34, 0x0, 0x1ac);
-                Vector3 coordinates = Marshal.PtrToStructure<Vector3>(coordinatesPtr);
+                // NOTE: All text should be drawn in HDrawsTexts()
 
+                // GLM point particle
                 IntPtr glmPtr = Memory.GetPointerAtOffset((IntPtr)0x500298, 0x234, 0x10, 0xC, 0xB0);
-                Vector3 glm = Marshal.PtrToStructure<Vector3>(glmPtr);
-
-                string levelName = OGetCurrentLevelName();
-
-                string coordinatesString = "X".KeyValue(coordinates.X.Float()).NL() +
-                                           "Y".KeyValue(coordinates.Y.Float()).NL() +
-                                           "Z".KeyValue(coordinates.Z.Float());
-
-                string glmString = "GLM".Yellow() + ":X".KeyValue(glm.X.Float()).NL() +
-                                   "::::Y".KeyValue(glm.Y.Float()).NL() +
-                                   "::::Z".KeyValue(glm.Z.Float());
-
-                CustomText(coordinatesString, 10, 5, 5);
-                CustomText(glmString, 10, 300, 5);
-                CustomText("Level".KeyValue(levelName), 10, 5, 970);
-
                 OVCreatePart(24576, glmPtr, 0, 2, 2, 2, sparkTexture);
+
+                // Text box background
+                //Vector3 vpos1 = new Vector3 { X=14, Y=78, Z=0 };
+                //Vector3 vpos2 = new Vector3 { X=94, Y=95, Z=0 };
+                //using (Ptr pos1 = new Ptr(vpos1), pos2 = new Ptr(vpos2))
+                //{
+                //    OVAddParticle(110, pos1, pos2, blueSparkThatIsAlsoABoxTexture, 190);
+                //}
+
             }
             catch (Exception e)
             {
                 Interface.HandleError(e);
             }
+
             return engine;
         }
     }

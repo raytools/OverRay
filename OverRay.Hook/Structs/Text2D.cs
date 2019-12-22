@@ -12,7 +12,7 @@ namespace OverRay.Hook.Structs
         public byte alphaByte;
         public byte gap11;
         public byte highlight;
-        public byte options; // bit 4 = highlighting color , bit 5 = black background
+        public byte options; // bit 4 = highlighting color
         public int dword14;
         public byte flag3;
     }

@@ -50,21 +50,26 @@
     <Compile Include="Detour.cs" />
     <Compile Include="GameFunctions.cs" />
     <Compile Include="GameFunctions\fn_p_stCode4PersoLePlusProche.cs" />
+    <Compile Include="GameFunctions\ClearZBufferRegion.cs" />
+    <Compile Include="GameFunctions\DrawsTexts.cs" />
     <Compile Include="GameFunctions\GetCurrentLevelName.cs" />
+    <Compile Include="GameFunctions\SwapSceneBuffer.cs" />
     <Compile Include="GameFunctions\VAddParticle.cs" />
     <Compile Include="GameFunctions\VCreatePart.cs" />
     <Compile Include="GameFunctions\DrawText.cs" />
     <Compile Include="GameFunctions\VEngine.cs" />
     <Compile Include="Structs\EngineObject.cs" />
+    <Compile Include="GameFunctions\WriteToViewportFinished.cs" />
     <Compile Include="Structs\Text2D.cs" />
     <Compile Include="Structs\SuperObject.cs" />
     <Compile Include="Structs\Vector3.cs" />
-    <Compile Include="Text.cs" />
+    <Compile Include="Utils\Text.cs" />
     <Compile Include="Utils\Log.cs" />
     <Compile Include="Memory.cs" />
     <Compile Include="Utils\ObservableQueue.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RemoteInterface.cs" />
+    <Compile Include="Utils\OtherUtils.cs" />
     <Compile Include="Utils\Ptr.cs" />
   </ItemGroup>
   <ItemGroup>
