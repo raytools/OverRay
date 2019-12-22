@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using OverRay.Hook;
 using OverRay.Hook.Utils;
 using OverRay.UI.WPF;
 
@@ -13,6 +11,7 @@ namespace OverRay.UI
         public MainViewModel()
         {
             AttachCommand = new RelayCommand(AttachToProcess);
+
             HookManager = new HookManager("OverRay.Hook.dll", "Rayman2", "Rayman2.exe", "Rayman2.exe.noshim");
             BindingOperations.EnableCollectionSynchronization(Log.Messages, this);
         }
@@ -51,6 +50,5 @@ namespace OverRay.UI
                     throw new ArgumentOutOfRangeException();
             }
         }
-
     }
 }

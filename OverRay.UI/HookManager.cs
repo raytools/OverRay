@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels.Ipc;
-using System.Text;
 using EasyHook;
 using OverRay.Hook;
 
@@ -15,10 +14,14 @@ namespace OverRay.UI
         {
             InjectionLib = Path.Combine(Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location), libraryName);
             ProcessNames = processNames;
+
+            Interface = new RemoteInterface();
         }
 
         private string _channelName;
-        private static IpcServerChannel ipc;
+        private IpcServerChannel ipc;
+
+        public RemoteInterface Interface { get; set; }
 
         private string[] ProcessNames { get; }
         private string InjectionLib { get; }
@@ -35,7 +38,7 @@ namespace OverRay.UI
             try
             {
                 ipc = RemoteHooking.IpcCreateServer<RemoteInterface>(ref _channelName,
-                    WellKnownObjectMode.Singleton);
+                    WellKnownObjectMode.Singleton, Interface);
 
                 RemoteHooking.Inject(processId, InjectionOptions.DoNotRequireStrongName,
                     InjectionLib, InjectionLib, _channelName);

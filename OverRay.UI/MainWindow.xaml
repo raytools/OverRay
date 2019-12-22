@@ -26,7 +26,6 @@
                 Height="30"
                 VerticalAlignment="Center"/>
 
-
         <Expander Grid.Row="1"
                   Header="Log"
                   Margin="0 5 0 0">
