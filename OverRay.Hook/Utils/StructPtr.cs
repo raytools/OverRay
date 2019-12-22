@@ -3,9 +3,9 @@ using System.Runtime.InteropServices;
 
 namespace OverRay.Hook.Utils
 {
-    public class Ptr : IDisposable
+    public class StructPtr : IDisposable
     {
-        public Ptr(object obj)
+        public StructPtr(object obj)
         {
             if (obj != null)
             {
@@ -17,7 +17,7 @@ namespace OverRay.Hook.Utils
 
         public IntPtr Pointer { get; private set; }
 
-        public static implicit operator IntPtr(Ptr ptr) => ptr.Pointer;
+        public static implicit operator IntPtr(StructPtr ptr) => ptr.Pointer;
 
 
         private void ReleaseUnmanagedResources()
@@ -35,6 +35,6 @@ namespace OverRay.Hook.Utils
             GC.SuppressFinalize(this);
         }
 
-        ~Ptr() => ReleaseUnmanagedResources();
+        ~StructPtr() => ReleaseUnmanagedResources();
     }
 }

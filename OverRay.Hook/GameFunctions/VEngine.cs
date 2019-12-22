@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using OverRay.Hook.Structs;
+using OverRay.Hook.Utils;
 
 namespace OverRay.Hook
 {
@@ -26,11 +28,18 @@ namespace OverRay.Hook
                 // Text box background
                 //Vector3 vpos1 = new Vector3 { X=14, Y=78, Z=0 };
                 //Vector3 vpos2 = new Vector3 { X=94, Y=95, Z=0 };
-                //using (Ptr pos1 = new Ptr(vpos1), pos2 = new Ptr(vpos2))
+                //using (StructPtr pos1 = new StructPtr(vpos1), pos2 = new StructPtr(vpos2))
                 //{
-                //    OVAddParticle(110, pos1, pos2, blueSparkThatIsAlsoABoxTexture, 190);
+                //    OVAddParticle(110, pos1, pos2, blueSparkTexture, 190);
                 //}
 
+                // Text box icon
+                //Vector3 rpos1 = new Vector3 { X=4, Y=80, Z=0 };
+                //Vector3 rpos2 = new Vector3 { X=14, Y=92, Z=200 };
+                //using (StructPtr pos1 = new StructPtr(rpos1), pos2 = new StructPtr(rpos2))
+                //{
+                //    OVAddParticle(125, pos1, pos2, rayIcon, 5);
+                //}
             }
             catch (Exception e)
             {

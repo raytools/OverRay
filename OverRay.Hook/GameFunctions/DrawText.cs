@@ -42,7 +42,7 @@ namespace OverRay.Hook
                 alphaByte = alpha
             };
 
-            using (Ptr textPtr = new Ptr(textObject))
+            using (StructPtr textPtr = new StructPtr(textObject))
             {
                 ODrawText(0x5004D4, textPtr);
             }

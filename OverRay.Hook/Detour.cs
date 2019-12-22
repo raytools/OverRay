@@ -26,10 +26,11 @@ namespace OverRay.Hook
             try
             {
                 Hooks["VEngine"] = LocalHook.Create(GameFunctions.VEnginePtr, new GameFunctions.VEngine(Game.HVEngine), this);
-                Hooks["VEngine"].ThreadACL.SetExclusiveACL(new[] { 0 });
-                
                 Hooks["DrawsTexts"] = LocalHook.Create(GameFunctions.DrawsTextsPtr, new GameFunctions.DrawsTexts(Game.HDrawsTexts), this);
-                Hooks["DrawsTexts"].ThreadACL.SetExclusiveACL(new[] { 0 });
+                //Hooks["VAddParticle"] = LocalHook.Create(GameFunctions.VAddParticlePtr, new GameFunctions.VAddParticle(Game.HVAddParticle), this);
+
+                foreach (KeyValuePair<string, LocalHook> hook in Hooks)
+                    hook.Value.ThreadACL.SetExclusiveACL(new[] { 0 });
 
                 RemoteHooking.WakeUpProcess();
 
