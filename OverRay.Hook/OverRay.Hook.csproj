@@ -59,7 +59,9 @@
     <Compile Include="GameFunctions\VEngine.cs" />
     <Compile Include="GameFunctions\WriteToViewportFinished.cs" />
     <Compile Include="Structs\Text2D.cs" />
+    <Compile Include="Structs\TextureData.cs" />
     <Compile Include="Structs\Vector3.cs" />
+    <Compile Include="Texture.cs" />
     <Compile Include="Utils\Text.cs" />
     <Compile Include="Utils\Log.cs" />
     <Compile Include="Memory.cs" />
@@ -70,9 +72,7 @@
     <Compile Include="Utils\StructPtr.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EasyHook32.dll">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <Content Include="EasyHook32.dll" />
     <Content Include="EasyHook32Svc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
