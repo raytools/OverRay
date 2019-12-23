@@ -62,6 +62,8 @@
     <Compile Include="GameFunctions\WriteToViewportFinished.cs" />
     <Compile Include="Structs\Text2D.cs" />
     <Compile Include="Structs\SuperObject.cs" />
+    <Compile Include="Structs\Matrix.cs" />
+    <Compile Include="Structs\StandardGame.cs" />
     <Compile Include="Structs\Vector3.cs" />
     <Compile Include="Utils\Text.cs" />
     <Compile Include="Utils\Log.cs" />
