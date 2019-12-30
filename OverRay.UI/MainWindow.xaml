@@ -37,7 +37,8 @@
                 </Grid.RowDefinitions>
 
                 <ListBox Grid.Row="0"
-                         Width="300"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         Width="350"
                          Height="300"
                          ItemsSource="{Binding Messages}"
                          SelectionMode="Single"

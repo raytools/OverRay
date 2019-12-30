@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Threading;
 using EasyHook;
+using OverRay.Hook.Mod;
 
 namespace OverRay.Hook
 {
@@ -13,27 +13,23 @@ namespace OverRay.Hook
             //Debugger.Launch();
             Interface = RemoteHooking.IpcConnectClient<RemoteInterface>(channelName);
             Interface.IsInstalled(RemoteHooking.GetCurrentProcessId());
-            Game = new GameFunctions(Interface);
         }
 
-        private RemoteInterface Interface { get; }
-        private GameFunctions Game { get; }
+        internal static RemoteInterface Interface { get; set; }
 
-        private static Dictionary<string, LocalHook> Hooks = new Dictionary<string, LocalHook>();
+        internal static Dictionary<string, LocalHook> Hooks = new Dictionary<string, LocalHook>();
+
+        private GameManager Game;
+
+        public static Detour Instance;
 
         public void Run(RemoteHooking.IContext inContext, string inChannelName)
         {
             try
             {
-                Hooks["VEngine"] = LocalHook.Create(GameFunctions.VEnginePtr, new GameFunctions.VEngine(Game.HVEngine), this);
-                Hooks["DrawsTexts"] = LocalHook.Create(GameFunctions.DrawsTextsPtr, new GameFunctions.DrawsTexts(Game.HDrawsTexts), this);
-                //Hooks["VAddParticle"] = LocalHook.Create(GameFunctions.VAddParticlePtr, new GameFunctions.VAddParticle(Game.HVAddParticle), this);
-
-                foreach (KeyValuePair<string, LocalHook> hook in Hooks)
-                    hook.Value.ThreadACL.SetExclusiveACL(new[] { 0 });
+                Game = new GameManager();
 
                 RemoteHooking.WakeUpProcess();
-
             }
             catch (Exception e)
             {
@@ -41,7 +37,6 @@ namespace OverRay.Hook
             }
 
             while (true) Thread.Sleep(100);
-
         }
     }
 }
