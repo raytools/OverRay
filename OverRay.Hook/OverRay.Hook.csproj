@@ -56,12 +56,13 @@
     <Compile Include="Mod\GameManager.cs" />
     <Compile Include="Mod\Hud.cs" />
     <Compile Include="Structs\EngineObject.cs" />
-    <Compile Include="Structs\SpecialKeys.cs" />
+    <Compile Include="Structs\KeyCodes.cs" />
     <Compile Include="Structs\Text2D.cs" />
     <Compile Include="Structs\SuperObject.cs" />
     <Compile Include="Structs\Matrix.cs" />
     <Compile Include="Structs\StandardGame.cs" />
     <Compile Include="Structs\Vector3.cs" />
+    <Compile Include="Utils\ArrayPtr.cs" />
     <Compile Include="Utils\GameFunction.cs" />
     <Compile Include="Utils\Text.cs" />
     <Compile Include="Utils\Log.cs" />

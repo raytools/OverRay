@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using OverRay.Hook.Structs;
 using OverRay.Hook.Utils;
 
 namespace OverRay.Hook.GameFunctions
@@ -8,9 +10,17 @@ namespace OverRay.Hook.GameFunctions
     {
         public InputFunctions()
         {
+            InputActions = new Dictionary<char, Action>();
+            InputCodeActions = new Dictionary<KeyCodes, Action>();
+
             VirtualKeyToAscii = new GameFunction<FVirtualKeyToAscii>(0x496110, HVirtualKeyToAscii);
             VReadInput = new GameFunction<FVReadInput>(0x496510, HVReadInput);
         }
+
+        public Dictionary<char, Action> InputActions { get; }
+        public Dictionary<KeyCodes, Action> InputCodeActions { get; }
+
+        public Action<char, byte> ExclusiveInput { get; set; }
 
         #region VirtualKeyToAscii
 
@@ -19,35 +29,25 @@ namespace OverRay.Hook.GameFunctions
 
         public GameFunction<FVirtualKeyToAscii> VirtualKeyToAscii { get; }
 
-        internal short HVirtualKeyToAscii(byte ch, int a2)
+        private short HVirtualKeyToAscii(byte ch, int a2)
         {
             short result = VirtualKeyToAscii.Call(ch, a2);
 
             Detour.Interface.WriteLog($"VirtualKeyToAscii result: {(char)result}, char: {ch}, a2: {a2}");
 
-            /*
-            if ((char)result == 'm')
+            if (ExclusiveInput == null)
             {
-                if (TestMenu.MenuShown || Marshal.ReadByte((IntPtr) 0x500faa) == 0)
+                lock (InputActions)
                 {
-                    TestMenu.ToggleMenu();
-                    Marshal.WriteByte((IntPtr)0x500faa, (byte)(TestMenu.MenuShown ? 1 : 0));
+                    lock (InputCodeActions)
+                    {
+                        if (InputActions.TryGetValue((char) result, out Action action) ||
+                            InputCodeActions.TryGetValue((KeyCodes) ch, out action))
+                            action.Invoke();
+                    }
                 }
             }
-
-            if (TestMenu.MenuShown)
-            {
-                switch ((SpecialKeys)ch)
-                {
-                    case SpecialKeys.Up:
-                        TestMenu.PreviousItem();
-                        break;
-                    case SpecialKeys.Down:
-                        TestMenu.NextItem();
-                        break;
-                }
-            }
-            */
+            else ExclusiveInput.Invoke((char)result, ch);
 
             return result;
         }
@@ -61,7 +61,7 @@ namespace OverRay.Hook.GameFunctions
 
         public GameFunction<FVReadInput> VReadInput { get; }
 
-        internal short HVReadInput(int a1)
+        private short HVReadInput(int a1)
         {
             short result = VReadInput.Call(a1);
 
