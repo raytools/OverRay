@@ -1,6 +1,6 @@
 ﻿namespace OverRay.Hook.Structs
 {
-    public enum SpecialKeys
+    public enum KeyCodes
     {
         Up = 200,
         Down = 208,
