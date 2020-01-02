@@ -104,13 +104,14 @@ namespace OverRay.Hook.Mod
                                           0x00000000, 0x00010000,
                 };
 
+            // TODO: use ArrayPtr()
+
             IntPtr interpArray = Marshal.AllocHGlobal(interp.Length * 4);
             for (int i = 0; i < interp.Length; i++) {
                 Marshal.WriteInt32(interpArray, i * 4, interp[i]);
             }
 
-            int[] param = new int[0x20]; // 0x20
-            IntPtr paramArray = Marshal.AllocHGlobal(param.Length * 4);
+            IntPtr paramArray = Marshal.AllocHGlobal(0x20 * 4);
 
             IntPtr interpPtrStart = interpArray + 0x8; // we start at the second node of the interpreter tree
 
