@@ -29,8 +29,11 @@ namespace OverRay.Hook.GameFunctions
         {
             try
             {
-                foreach (KeyValuePair<string, Action> action in TextActions)
-                    action.Value.Invoke();
+                lock (TextActions)
+                {
+                    foreach (KeyValuePair<string, Action> action in TextActions)
+                        action.Value.Invoke();
+                }
             }
             catch (Exception e)
             {

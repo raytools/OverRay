@@ -25,14 +25,17 @@ namespace OverRay.Hook.GameFunctions
 
         public GameFunction<FVEngine> VEngine { get; }
 
-        public byte HVEngine()
+        private byte HVEngine()
         {
             byte engine = VEngine.Call();
 
             try
             {
-                foreach (KeyValuePair<string, Action> pair in EngineActions)
-                    pair.Value.Invoke();
+                lock (EngineActions)
+                {
+                    foreach (KeyValuePair<string, Action> action in EngineActions)
+                        action.Value.Invoke();
+                }
             }
             catch (Exception e)
             {

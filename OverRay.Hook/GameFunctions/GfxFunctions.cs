@@ -20,7 +20,7 @@ namespace OverRay.Hook.GameFunctions
 
         public GameFunction<FVAddParticle> VAddParticle { get; }
 
-        internal void HVAddParticle(uint particleType, IntPtr vector, IntPtr vector2, int texture, float a6)
+        private void HVAddParticle(uint particleType, IntPtr vector, IntPtr vector2, int texture, float a6)
         {
             VAddParticle.Call(particleType, vector, vector2, texture, a6);
 
@@ -48,7 +48,7 @@ namespace OverRay.Hook.GameFunctions
 
         public GameFunction<FVCreatePart> VCreatePart { get; }
 
-        internal int HVCreatePart(int particleBehavior, IntPtr position, int a3, float a4, float a5, float a6, int texture)
+        private int HVCreatePart(int particleBehavior, IntPtr position, int a3, float a4, float a5, float a6, int texture)
         {
             int part = VCreatePart.Call(particleBehavior, position, a3, a4, a5, a6, texture);
 
