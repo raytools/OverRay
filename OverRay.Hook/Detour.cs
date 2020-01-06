@@ -38,5 +38,10 @@ namespace OverRay.Hook
 
             while (true) Thread.Sleep(100);
         }
+
+        ~Detour()
+        {
+            Interface.GameClosed();
+        }
     }
 }

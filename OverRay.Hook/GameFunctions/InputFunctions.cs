@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using OverRay.Hook.Structs;
-using OverRay.Hook.Utils;
+using OverRay.Hook.Types;
 
 namespace OverRay.Hook.GameFunctions
 {
@@ -11,16 +11,16 @@ namespace OverRay.Hook.GameFunctions
         public InputFunctions()
         {
             InputActions = new Dictionary<char, Action>();
-            InputCodeActions = new Dictionary<KeyCodes, Action>();
+            InputCodeActions = new Dictionary<KeyCode, Action>();
 
             VirtualKeyToAscii = new GameFunction<FVirtualKeyToAscii>(0x496110, HVirtualKeyToAscii);
             VReadInput = new GameFunction<FVReadInput>(0x496510, HVReadInput);
         }
 
         public Dictionary<char, Action> InputActions { get; }
-        public Dictionary<KeyCodes, Action> InputCodeActions { get; }
+        public Dictionary<KeyCode, Action> InputCodeActions { get; }
 
-        public Action<char, byte> ExclusiveInput { get; set; }
+        public Action<char, KeyCode> ExclusiveInput { get; set; }
 
         #region VirtualKeyToAscii
 
@@ -41,13 +41,13 @@ namespace OverRay.Hook.GameFunctions
                 {
                     lock (InputCodeActions)
                     {
-                        if (InputActions.TryGetValue((char) result, out Action action) ||
-                            InputCodeActions.TryGetValue((KeyCodes) ch, out action))
+                        if (InputActions.TryGetValue((char)result, out Action action) ||
+                            InputCodeActions.TryGetValue((KeyCode)ch, out action))
                             action.Invoke();
                     }
                 }
             }
-            else ExclusiveInput.Invoke((char)result, ch);
+            else ExclusiveInput.Invoke((char)result, (KeyCode)ch);
 
             return result;
         }
@@ -72,5 +72,21 @@ namespace OverRay.Hook.GameFunctions
         }
 
         #endregion
+
+        private int dword50A560 = 0;
+
+        public void DisableGameInput()
+        {
+            if (dword50A560 == 0)
+                dword50A560 = Marshal.ReadInt32((IntPtr) 0x50A560);
+
+            Marshal.WriteInt32((IntPtr) 0x50A560, 0);
+        }
+
+        public void EnableGameInput()
+        {
+            Marshal.WriteInt32((IntPtr) 0x50A560, dword50A560);
+            dword50A560 = 0;
+        }
     }
 }

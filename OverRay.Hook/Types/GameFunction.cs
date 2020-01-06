@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using EasyHook;
 
-namespace OverRay.Hook.Utils
+namespace OverRay.Hook.Types
 {
     public class GameFunction<T> where T : Delegate
     {

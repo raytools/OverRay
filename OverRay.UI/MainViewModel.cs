@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Data;
 using System.Windows.Input;
+using OverRay.Hook.Types;
 using OverRay.Hook.Utils;
 using OverRay.UI.WPF;
 

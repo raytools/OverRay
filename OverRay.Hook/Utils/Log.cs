@@ -1,4 +1,6 @@
-﻿namespace OverRay.Hook.Utils
+﻿using OverRay.Hook.Types;
+
+namespace OverRay.Hook.Utils
 {
     public static class Log
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 using OverRay.Hook.Structs;
+using OverRay.Hook.Types;
 using OverRay.Hook.Utils;
 
 namespace OverRay.Hook.Mod
@@ -11,8 +12,6 @@ namespace OverRay.Hook.Mod
         {
             Manager = manager;
             TextSize = 9;
-
-            InitializeHud();
         }
 
         private GameManager Manager { get; }
@@ -41,7 +40,7 @@ namespace OverRay.Hook.Mod
         //    OVAddParticle(125, pos1, pos2, rayIcon, 5);
         //}
 
-        private void InitializeHud()
+        public void InitializeHud()
         {
             Manager.Text.TextActions["coordinates"] = DrawCoordinates;
             Manager.Text.TextActions["glm"] = DrawGlmCoordinates;

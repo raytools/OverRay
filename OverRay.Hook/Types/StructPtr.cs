@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace OverRay.Hook.Utils
+namespace OverRay.Hook.Types
 {
     public class StructPtr : IDisposable
     {

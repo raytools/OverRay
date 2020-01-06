@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace OverRay.Hook
+namespace OverRay.Hook.Utils
 {
     public static class Memory
     {

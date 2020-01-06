@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OverRay.Hook.Utils;
+using OverRay.Hook.Types;
 
 namespace OverRay.Hook.GameFunctions
 {
@@ -13,6 +13,7 @@ namespace OverRay.Hook.GameFunctions
 
             VEngine = new GameFunction<FVEngine>(0x40ADA0, HVEngine);
             GetCurrentLevelName = new GameFunction<FGetCurrentLevelName>(0x404DA0);
+            AskToChangeLevel = new GameFunction<FAskToChangeLevel>(0x4054D0);
             Code4PersoLePlusProche = new GameFunction<FCode4PersoLePlusProche>(0x476960);
         }
 
@@ -53,6 +54,15 @@ namespace OverRay.Hook.GameFunctions
         public delegate string FGetCurrentLevelName();
 
         public GameFunction<FGetCurrentLevelName> GetCurrentLevelName { get; }
+
+        #endregion
+
+        #region AskToChangeLevel
+
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate void FAskToChangeLevel(string levelName, byte save);
+
+        public GameFunction<FAskToChangeLevel> AskToChangeLevel { get; }
 
         #endregion
 

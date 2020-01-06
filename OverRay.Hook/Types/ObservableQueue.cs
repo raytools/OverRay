@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 
-namespace OverRay.Hook.Utils
+namespace OverRay.Hook.Types
 {
     public class ObservableQueue<T> : Queue<T>, INotifyCollectionChanged
     {

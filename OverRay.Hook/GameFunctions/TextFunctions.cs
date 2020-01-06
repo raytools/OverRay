@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using OverRay.Hook.Structs;
-using OverRay.Hook.Utils;
+using OverRay.Hook.Types;
 
 namespace OverRay.Hook.GameFunctions
 {
