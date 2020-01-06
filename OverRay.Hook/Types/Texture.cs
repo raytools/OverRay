@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using OverRay.Hook.Structs;
 
-namespace OverRay.Hook
+namespace OverRay.Hook.Types
 {
     public class Texture
     {

@@ -57,6 +57,7 @@
     <Compile Include="Mod\Hud.cs" />
     <Compile Include="Mod\Menu.cs" />
     <Compile Include="Mod\MenuItem.cs" />
+    <Compile Include="Mod\TextureViewer.cs" />
     <Compile Include="Structs\EngineObject.cs" />
     <Compile Include="Types\KeyCode.cs" />
     <Compile Include="Structs\Text2D.cs" />
@@ -67,7 +68,7 @@
     <Compile Include="Structs\Vector3.cs" />
     <Compile Include="Types\ArrayPtr.cs" />
     <Compile Include="Types\GameFunction.cs" />
-    <Compile Include="Texture.cs" />
+    <Compile Include="Types\Texture.cs" />
     <Compile Include="Utils\Text.cs" />
     <Compile Include="Utils\Log.cs" />
     <Compile Include="Utils\Memory.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="RemoteInterface.cs" />
     <Compile Include="Utils\OtherUtils.cs" />
     <Compile Include="Types\StructPtr.cs" />
+    <Compile Include="Utils\TextureLoader.cs" />
     <Compile Include="Utils\TexturePointers.cs" />
   </ItemGroup>
   <ItemGroup>

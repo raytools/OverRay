@@ -1,4 +1,4 @@
-﻿namespace OverRay.Hook.Structs
+﻿namespace OverRay.Hook.Types
 {
     public enum KeyCode
     {

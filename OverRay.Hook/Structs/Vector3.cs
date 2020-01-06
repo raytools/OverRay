@@ -15,5 +15,7 @@ namespace OverRay.Hook.Structs
         public float X;
         public float Y;
         public float Z;
+
+        public static Vector3 Zero = new Vector3(0, 0, 0);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using OverRay.Hook.GameFunctions;
+using OverRay.Hook.Types;
 using OverRay.Hook.Utils;
 
 namespace OverRay.Hook.Mod
@@ -28,10 +30,15 @@ namespace OverRay.Hook.Mod
                 new MenuItem("glowfist power", new Menu(this,
                     new MenuItem("on", () => Marshal.WriteInt32(glowFistPtr, 0x400000)),
                     new MenuItem("off", () => Marshal.WriteInt32(glowFistPtr, 0))
-                ))
+                )),
+                new MenuItem("texture viewer", () =>
+                {
+                    TextureViewer viewer = new TextureViewer(this);
+                    viewer.Show();
+                })
             );
 
-            Input.InputActions.Add('m', () => TestMenu.Show());
+            Input.InputActions['m'] = () => TestMenu.Show();
         }
 
         public EngineFunctions Engine { get; } = new EngineFunctions();
