@@ -3,8 +3,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.Remoting;
 using System.Runtime.Remoting.Channels.Ipc;
+using System.Threading;
 using EasyHook;
 using OverRay.Hook;
+using OverRay.Hook.Utils;
 
 namespace OverRay.UI
 {
@@ -22,34 +24,54 @@ namespace OverRay.UI
         private IpcServerChannel ipc;
 
         public RemoteInterface Interface { get; set; }
+        public bool IsHookAttached { get; set; }
 
         private string[] ProcessNames { get; }
         private string InjectionLib { get; }
         public string ExceptionMessage { get; set; }
 
-        public InjectorResponse Inject()
+        public void Inject()
         {
             _channelName = null;
-            int processId = GetProcessId();
 
-            if (processId == 0)
-                return InjectorResponse.ProcessNotFound;
+            ipc = RemoteHooking.IpcCreateServer<RemoteInterface>(ref _channelName,
+                WellKnownObjectMode.Singleton, Interface);
 
-            try
+            Thread injectionThread = new Thread(() =>
             {
-                ipc = RemoteHooking.IpcCreateServer<RemoteInterface>(ref _channelName,
-                    WellKnownObjectMode.Singleton, Interface);
+                Log.Add("Attempting to inject...");
+                while (!IsHookAttached)
+                {
+                    int processId = GetProcessId();
 
-                RemoteHooking.Inject(processId, InjectionOptions.DoNotRequireStrongName,
-                    InjectionLib, InjectionLib, _channelName);
+                    if (processId == 0)
+                    {
+                        Log.Add("Cannot find process, retrying in 5s...");
+                        Thread.Sleep(5000);
+                        continue;
+                    }
 
-                return InjectorResponse.Success;
-            }
-            catch (Exception e)
-            {
-                ExceptionMessage = e.Message;
-                return InjectorResponse.OtherError;
-            }
+                    try
+                    {
+                        RemoteHooking.Inject(processId, InjectionOptions.DoNotRequireStrongName,
+                            InjectionLib, InjectionLib, _channelName);
+
+                        IsHookAttached = true;
+                        Log.Add("Injection finished.");
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Add("Injection error:");
+                        ExceptionMessage = e.Message;
+                        Log.Add("Retrying in 5s...");
+
+                        IsHookAttached = false;
+                        Thread.Sleep(5000);
+                    }
+                }
+            });
+            injectionThread.IsBackground = true;
+            injectionThread.Start();
         }
 
         private int GetProcessId()
@@ -64,12 +86,5 @@ namespace OverRay.UI
 
             return 0;
         }
-    }
-
-    public enum InjectorResponse
-    {
-        Success,
-        ProcessNotFound,
-        OtherError
     }
 }

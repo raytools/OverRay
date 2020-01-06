@@ -6,76 +6,53 @@
         xmlns:local="clr-namespace:OverRay.UI"
         mc:Ignorable="d"
         Title="OverRay"
-        SizeToContent="WidthAndHeight"
-        ResizeMode="CanMinimize"
+        ResizeMode="CanResize"
         SnapsToDevicePixels="True"
-        MinWidth="250"
+        MinWidth="400" MinHeight="300"
+        Width="400" Height="300"
         d:DataContext="{d:DesignInstance local:MainViewModel}">
 
-    <Grid Margin="10">
+    <Grid Margin="8">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Button Content="Inject DLL"
-                Command="{Binding AttachCommand}"
-                IsEnabled="{Binding IsHookAttached, Converter={StaticResource BoolNotConverter}}"
-                Margin="0 0 8 0"
-                Width="120"
-                Height="30"
-                VerticalAlignment="Center"/>
+        <ListBox Grid.Row="1"
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ItemsSource="{Binding Messages}"
+                 SelectionMode="Single"
+                 Name="LogBox">
 
-        <Expander Grid.Row="1"
-                  Header="Log"
-                  Margin="0 5 0 0">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock TextWrapping="Wrap" Text="{Binding }" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
 
-            <Grid Margin="0 5 0 0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <EventSetter Event="MouseDoubleClick" Handler="LogItemDoubleClick" />
+                </Style>
+            </ListBox.ItemContainerStyle>
 
-                <ListBox Grid.Row="0"
-                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         Width="350"
-                         Height="300"
-                         ItemsSource="{Binding Messages}"
-                         SelectionMode="Single"
-                         Name="LogBox">
+        </ListBox>
 
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock TextWrapping="Wrap" Text="{Binding }" />
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
+        <DockPanel Grid.Row="2"
+                   HorizontalAlignment="Stretch"
+                   Margin="0 3 0 0">
 
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="{x:Type ListBoxItem}">
-                            <EventSetter Event="MouseDoubleClick" Handler="LogItemDoubleClick" />
-                        </Style>
-                    </ListBox.ItemContainerStyle>
+            <ToggleButton Content="Pause Log"
+                          DockPanel.Dock="Right"
+                          IsChecked="{Binding IsLogPaused}"
+                          Padding="5 2" />
 
-                </ListBox>
+            <TextBlock Text="Double-click item to copy"
+                       VerticalAlignment="Center"
+                       Foreground="{x:Static SystemColors.GrayTextBrush}"/>
 
-                <DockPanel Grid.Row="1"
-                           HorizontalAlignment="Stretch"
-                           Margin="0 3 0 0">
-
-                    <ToggleButton Content="Pause Log"
-                                  DockPanel.Dock="Right"
-                                  IsChecked="{Binding IsLogPaused}"
-                                  Padding="5 2" />
-
-                    <TextBlock Text="Double-click item to copy"
-                               VerticalAlignment="Center"
-                               Foreground="{x:Static SystemColors.GrayTextBrush}"/>
-
-                </DockPanel>
-
-            </Grid>
-
-        </Expander>
+        </DockPanel>
         
     </Grid>
 
