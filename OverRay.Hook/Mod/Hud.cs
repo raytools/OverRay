@@ -92,16 +92,17 @@ namespace OverRay.Hook.Mod
             EngineObject engineObject = Marshal.PtrToStructure<EngineObject>(raymanSPO.engineObjectPtr);
             int stdGame = (int)engineObject.stdGamePtr;
 
-            int[] interp = new int[] {0x00000071, 0x03020000, // Func_CibleLaPlusProcheavecAngles(, 1, 1, 10, Func_GetPersoSighting(), 160f, 40f);
-                                          0x00000020, 0x0C030000, // 32,
-                                          0x00000014, 0x0C030000, // 20,
-                                          0x00000002, 0x0C030000, // 2,
-                                          0x00000001, 0x0C030000, // 1,
-                                          0x000000A3, 0x03030000, // Func_GetPersoSighting(),
-                                          0x420C0000, 0x0D030000, // 35f
-                                          0x420C0000, 0x0D030000, // 35f
-                                          0x00000000, 0x00010000,
-                };
+            int[] interp = {
+                0x00000071, 0x03020000, // Func_CibleLaPlusProcheavecAngles(, 1, 1, 10, Func_GetPersoSighting(), 160f, 40f);
+                0x00000020, 0x0C030000, // 32,
+                0x00000014, 0x0C030000, // 20,
+                0x00000002, 0x0C030000, // 2,
+                0x00000001, 0x0C030000, // 1,
+                0x000000A3, 0x03030000, // Func_GetPersoSighting(),
+                0x420C0000, 0x0D030000, // 35f
+                0x420C0000, 0x0D030000, // 35f
+                0x00000000, 0x00010000,
+            };
 
             // TODO: use ArrayPtr()
 

@@ -35,6 +35,9 @@ namespace OverRay.Hook.GameFunctions
 
             Detour.Interface.WriteLog($"VirtualKeyToAscii result: {(char)result}, char: {ch}, a2: {a2}");
 
+            // Prevent custom binds from activating on pause screen
+            if (Marshal.ReadByte((IntPtr) 0x500faa) != 0) return result;
+
             if (ExclusiveInput == null)
             {
                 lock (InputActions)

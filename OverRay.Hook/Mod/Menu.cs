@@ -13,12 +13,7 @@ namespace OverRay.Hook.Mod
             Manager = manager;
             Items = new List<MenuItem>(items);
 
-            foreach (MenuItem item in items)
-            {
-                int itemWidth = item.Name.Length * 2;
-                if (itemWidth > Width)
-                    Width = itemWidth;
-            }
+            Width = CalculateWidth();
         }
 
         public Menu(GameManager manager, Vector3 position, float width, params MenuItem[] items) : this(manager, items)
@@ -27,11 +22,12 @@ namespace OverRay.Hook.Mod
             Width = width;
         }
 
-        private string Id { get; } = Guid.NewGuid().ToString();
         private GameManager Manager { get; }
-        private Menu ParentMenu { get; set; }
+        private string Id { get; } = Guid.NewGuid().ToString();
+
         private Vector3 Position { get; } = new Vector3 { X=3, Y=10, Z=0 };
         private float Width { get; }
+        private Menu ParentMenu { get; set; }
 
         public List<MenuItem> Items { get; }
 
@@ -54,14 +50,14 @@ namespace OverRay.Hook.Mod
             Manager.Input.DisableGameInput();
             Manager.Input.ExclusiveInput = ProcessInput;
 
-            Manager.Engine.EngineActions[Id] = DrawGraphics;
-            Manager.Text.TextActions[Id] = DrawText;
+            lock (Manager.Engine.EngineActions) Manager.Engine.EngineActions[Id] = DrawGraphics;
+            lock (Manager.Text.TextActions) Manager.Text.TextActions[Id] = DrawText;
         }
 
         public void Hide()
         {
-            Manager.Engine.EngineActions.Remove(Id);
-            Manager.Text.TextActions.Remove(Id);
+            lock (Manager.Engine.EngineActions) Manager.Engine.EngineActions.Remove(Id);
+            lock (Manager.Text.TextActions) Manager.Text.TextActions.Remove(Id);
 
             Manager.Input.ExclusiveInput = null;
             Manager.Input.EnableGameInput();
@@ -105,6 +101,19 @@ namespace OverRay.Hook.Mod
             {
                 Manager.Text.CustomText(i == Selected ? Items[i].Name.Yellow(): Items[i].Name, 9, (Position.X + 1) * 10, (Position.Y + 2 + i * 4) * 10);
             }
+        }
+
+        private int CalculateWidth()
+        {
+            int newWidth = 0;
+            foreach (MenuItem item in Items)
+            {
+                int itemWidth = item.Name.Length * 2;
+                if (itemWidth > newWidth)
+                    newWidth = itemWidth;
+            }
+
+            return newWidth;
         }
     }
 }
