@@ -25,7 +25,7 @@ namespace OverRay.Hook.Mod
         private GameManager Manager { get; }
         private string Id { get; } = Guid.NewGuid().ToString();
 
-        private Vector3 Position { get; } = new Vector3 { X=3, Y=10, Z=0 };
+        private Vector3 Position { get; } = new Vector3 { X=3, Y=13, Z=0 };
         private float Width { get; }
         private Menu ParentMenu { get; set; }
 

@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace OverRay.Hook.Structs
 {
@@ -17,5 +18,7 @@ namespace OverRay.Hook.Structs
         public float Z;
 
         public static Vector3 Zero = new Vector3(0, 0, 0);
+
+        public float Length => (float) Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
     }
 }

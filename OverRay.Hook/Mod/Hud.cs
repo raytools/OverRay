@@ -20,8 +20,11 @@ namespace OverRay.Hook.Mod
 
         private readonly IntPtr Coordinates = Memory.GetPointerAtOffset((IntPtr) 0x500560, 0x224, 0x310, 0x34, 0x0, 0x1ac);
         private readonly IntPtr Glm = Memory.GetPointerAtOffset((IntPtr) 0x500298, 0x234, 0x10, 0xC, 0xB0);
+        private readonly IntPtr Speed = Memory.GetPointerAtOffset((IntPtr) 0x500298, 0x60, 0x7F0);
 
         private readonly string VersionText = $"OverRay:v{OtherUtils.GetVersion}".Yellow();
+
+        private bool Display { get; set; } = true;
 
         // TODO: methods
         // Text box background
@@ -42,16 +45,30 @@ namespace OverRay.Hook.Mod
 
         public void InitializeHud()
         {
-            Manager.Text.TextActions["coordinates"] = DrawCoordinates;
-            Manager.Text.TextActions["glm"] = DrawGlmCoordinates;
-            Manager.Engine.EngineActions["glm"] = DrawGlmPoint;
-            Manager.Text.TextActions["level"] = DrawLevelName;
-            Manager.Text.TextActions["VersionText"] = DrawVersion;
-            Manager.Engine.EngineActions["target"] = DrawTarget;
+            lock (Manager.Text.TextActions)
+            {
+                Manager.Text.TextActions["coordinates"] = DrawCoordinates;
+                Manager.Text.TextActions["glm"] = DrawGlmCoordinates;
+                Manager.Text.TextActions["speed"] = DrawSpeed;
+                Manager.Text.TextActions["level"] = DrawLevelName;
+                Manager.Text.TextActions["VersionText"] = DrawVersion;
+            }
+
+            lock (Manager.Engine.EngineActions)
+            {
+                Manager.Engine.EngineActions["glm"] = DrawGlmPoint;
+                Manager.Engine.EngineActions["target"] = DrawTarget;
+            }
         }
+
+        public void Show() => Display = true;
+
+        public void Hide() => Display = false;
 
         private void DrawCoordinates()
         {
+            if (!Display) return;
+
             Vector3 coordinates = Marshal.PtrToStructure<Vector3>(Coordinates);
             string coordinatesString = "X".KeyValue(coordinates.X.Float()).NL() +
                                        "Y".KeyValue(coordinates.Y.Float()).NL() +
@@ -62,6 +79,8 @@ namespace OverRay.Hook.Mod
 
         private void DrawGlmCoordinates()
         {
+            if (!Display) return;
+
             Vector3 glm = Marshal.PtrToStructure<Vector3>(Glm);
             string glmString = "GLM".Yellow() + ":X".KeyValue(glm.X.Float()).NL() +
                                "::::Y".KeyValue(glm.Y.Float()).NL() +
@@ -70,14 +89,32 @@ namespace OverRay.Hook.Mod
             Manager.Text.CustomText(glmString, TextSize, 280, 5);
         }
 
+        private void DrawSpeed()
+        {
+            if (!Display) return;
+
+            Vector3 speed = Marshal.PtrToStructure<Vector3>(Speed);
+
+            string speedString = "Speed".Yellow().KeyValue(speed.Length.Float()).NL() +
+                                 "::::X".KeyValue(speed.X.Float()).NL() +
+                                 "::::Y".KeyValue(speed.Y.Float()).NL() +
+                                 "::::Z".KeyValue(speed.Z.Float());
+
+            Manager.Text.CustomText(speedString, TextSize, 620, 5);
+        }
+
         private void DrawGlmPoint()
         {
+            if (!Display) return;
+
             Manager.Graphics.VCreatePart.Call(24576, Glm, 0, 2, 2, 2, TexturePointers.sparkTexture);
         }
 
         private void DrawLevelName()
         {
-            Manager.Text.CustomText("Level".KeyValue(Manager.Engine.GetCurrentLevelName.Call()), TextSize, 640, 5);
+            if (!Display) return;
+
+            Manager.Text.CustomText("Level".KeyValue(Manager.Engine.GetCurrentLevelName.Call()), TextSize, 5, 80);
         }
 
         private void DrawVersion()

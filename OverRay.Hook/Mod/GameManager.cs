@@ -23,7 +23,7 @@ namespace OverRay.Hook.Mod
         public TextFunctions Text { get; } = new TextFunctions();
         public InputFunctions Input { get; } = new InputFunctions();
 
-        private Hud Hud { get; }
+        public Hud Hud { get; }
 
         private Menu MainMenu { get; set; }
         private Menu LevelMenu { get; set; }
@@ -39,12 +39,13 @@ namespace OverRay.Hook.Mod
         private void InitMainMenu()
         {
             IntPtr purpleFistPtr = Memory.GetPointerAtOffset((IntPtr)0x4B730C, 0x274, 0x790, 0x0, 0x4, 0x574);
-            IntPtr glowFistPtr = Memory.GetPointerAtOffset((IntPtr)0x4B730C, 0x274, 0x790, 0x0, 0x4, 0x578);
+            IntPtr glowFistPtr = purpleFistPtr + 4;
 
             InitLevelMenu();
 
             MainMenu = new Menu(this,
                 new MenuItem("Change Level", LevelMenu),
+                new MenuItem("Reload Level", () => Engine.AskToChangeLevel.Call(Engine.GetCurrentLevelName.Call(), 0)),
                 new MenuItem("Purple Lum Power", new Menu(this,
                     new MenuItem("on", () => Marshal.WriteByte(purpleFistPtr, 0x40)),
                     new MenuItem("off", () => Marshal.WriteByte(purpleFistPtr, 0))
