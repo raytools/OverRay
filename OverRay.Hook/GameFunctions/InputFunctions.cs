@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using OverRay.Hook.Structs;
 using OverRay.Hook.Types;
 
 namespace OverRay.Hook.GameFunctions
@@ -33,7 +32,7 @@ namespace OverRay.Hook.GameFunctions
         {
             short result = VirtualKeyToAscii.Call(ch, a2);
 
-            Detour.Interface.WriteLog($"VirtualKeyToAscii result: {(char)result}, char: {ch}, a2: {a2}");
+            Detour.Interface.Log($"VirtualKeyToAscii result: {(char)result}, char: {ch}, a2: {a2}");
 
             // Prevent custom binds from activating on pause screen
             if (Marshal.ReadByte((IntPtr) 0x500faa) != 0) return result;
@@ -68,8 +67,8 @@ namespace OverRay.Hook.GameFunctions
         {
             short result = VReadInput.Call(a1);
 
-            Detour.Interface.WriteLog($"VReadInput Output: {result}, Pointer:");
-            Detour.Interface.WriteLog($"0x{Convert.ToString(a1, 16)}");
+            Detour.Interface.Log($"VReadInput Output: {result}, Pointer:");
+            Detour.Interface.Log($"0x{Convert.ToString(a1, 16)}");
 
             return result;
         }

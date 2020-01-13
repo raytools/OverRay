@@ -18,16 +18,16 @@ namespace OverRay.Hook.Types
             Hook = hook;
         }
 
-        public string Name { get; }
+        private string Name { get; }
         public IntPtr Pointer { get; }
         public T Call { get; }
-        public T Hook { get; set; }
+        private T Hook { get; }
 
         public void CreateHook()
         {
             Detour.Hooks[Name] = LocalHook.Create(Pointer, Hook, this);
             Detour.Hooks[Name].ThreadACL.SetExclusiveACL(new[] {0});
-            Detour.Interface.WriteLog($"Attached hook:\n{typeof(T).FullName}");
+            Detour.Interface.Log($"Attached hook:\n{typeof(T).FullName}");
         }
 
         public void DeleteHook()

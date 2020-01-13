@@ -13,14 +13,13 @@ namespace OverRay.Hook
         {
             //Debugger.Launch();
             Interface = RemoteHooking.IpcConnectClient<RemoteInterface>(channelName);
-            Interface.IsInstalled(RemoteHooking.GetCurrentProcessId());
+            Interface.Injected(RemoteHooking.GetCurrentProcessId());
         }
 
-        internal static RemoteInterface Interface { get; set; }
+        internal static RemoteInterface Interface { get; private set; }
+        internal static Dictionary<string, LocalHook> Hooks { get; } = new Dictionary<string, LocalHook>();
 
-        internal static Dictionary<string, LocalHook> Hooks = new Dictionary<string, LocalHook>();
-
-        private GameManager Game;
+        private GameManager Game { get; set; }
 
         public void Run(RemoteHooking.IContext inContext, string inChannelName)
         {
@@ -30,12 +29,11 @@ namespace OverRay.Hook
                 while (true)
                 {
                     // Engine state: 1 - loading game, 5 - loading level, 9 - loaded
-                    if (Marshal.ReadByte((IntPtr)0x500380) > 8)
+                    if (Marshal.ReadByte((IntPtr) 0x500380) > 8)
                         break;
                 }
 
                 Game = new GameManager();
-
                 RemoteHooking.WakeUpProcess();
             }
             catch (Exception e)
@@ -43,7 +41,7 @@ namespace OverRay.Hook
                 Interface.HandleError(e);
             }
 
-            while (true) Thread.Sleep(100);
+            while (true) Thread.Sleep(500);
         }
 
         ~Detour()

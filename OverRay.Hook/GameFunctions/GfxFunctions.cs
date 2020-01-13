@@ -29,8 +29,8 @@ namespace OverRay.Hook.GameFunctions
                 Vector3 s1 = Marshal.PtrToStructure<Vector3>(vector);
                 Vector3 s2 = Marshal.PtrToStructure<Vector3>(vector2);
 
-                Detour.Interface.WriteLog($"VAddPart, Particle type: {particleType}, texture: 0x{Convert.ToString(texture, 16)}, a6: {a6}");
-                Detour.Interface.WriteLog($"Vector1: {s1.X} {s1.Y} {s1.Z}, Vector2: {s2.X} {s2.Y} {s2.Z}");
+                Detour.Interface.Log($"VAddPart, Particle type: {particleType}, texture: 0x{Convert.ToString(texture, 16)}, a6: {a6}");
+                Detour.Interface.Log($"Vector1: {s1.X} {s1.Y} {s1.Z}, Vector2: {s2.X} {s2.Y} {s2.Z}");
             }
             catch (Exception e)
             {
@@ -52,7 +52,7 @@ namespace OverRay.Hook.GameFunctions
         {
             int part = VCreatePart.Call(particleBehavior, position, a3, a4, a5, a6, texture);
 
-            Detour.Interface.WriteLog($"VCreatePart, Particle behavior: {particleBehavior}, texture: 0x{Convert.ToString(texture, 16)}");
+            Detour.Interface.Log($"VCreatePart, Particle behavior: {particleBehavior}, texture: 0x{Convert.ToString(texture, 16)}");
 
             return part;
         }

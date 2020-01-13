@@ -57,9 +57,9 @@ namespace OverRay.Hook.GameFunctions
             try
             {
                 Text2D text = Marshal.PtrToStructure<Text2D>(textStruct);
-                Detour.Interface.WriteLog($"Text: {text.text} alphaByte: {text.alphaByte} gap11: {text.gap11}");
-                Detour.Interface.WriteLog($"highlight: {text.highlight} options: {text.options}");
-                Detour.Interface.WriteLog($"dword14: {text.dword14} flag3: {text.flag3}");
+                Detour.Interface.Log($"Text: {text.text} alphaByte: {text.alphaByte} gap11: {text.gap11}");
+                Detour.Interface.Log($"highlight: {text.highlight} options: {text.options}");
+                Detour.Interface.Log($"dword14: {text.dword14} flag3: {text.flag3}");
             }
             catch (Exception e)
             {

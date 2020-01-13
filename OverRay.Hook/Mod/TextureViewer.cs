@@ -85,7 +85,7 @@ namespace OverRay.Hook.Mod
             }
             else if (ch == 'c')
             {
-                Detour.Interface.WriteLog(Items[Selected].Name);
+                Detour.Interface.Log(Items[Selected].Name);
             }
             else if (ch == 'r')
             {

@@ -1,35 +1,16 @@
 ﻿using System;
-using System.Threading;
-using OverRay.Hook.Utils;
 
 namespace OverRay.Hook
 {
-    public class RemoteInterface : MarshalByRefObject
+    public abstract class RemoteInterface : MarshalByRefObject
     {
-        public void IsInstalled(int pid)
-        {
-            Log.Add($"DLL injected, PID: {pid}");
-        }
+        public abstract void Injected(int pid);
 
-        public void WriteLog(string msgPacket)
-        {
-            Log.Add(msgPacket);
-        }
+        public abstract void Log(string msgPacket);
 
-        public void HandleError(Exception e)
-        {
-            Log.Add(e.Message);
-        }
+        public abstract void HandleError(Exception e);
 
-        public void GameClosed()
-        {
-            // lazy hack to make sure IPC channel is closed
-            new Thread(() =>
-            {
-                Thread.Sleep(500);
-                System.Environment.Exit(0);
-            }).Start();
-        }
+        public abstract void GameClosed();
     }
 
 }

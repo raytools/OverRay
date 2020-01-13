@@ -70,6 +70,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolNotConverter.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="ObservableQueue.cs" />
     <Compile Include="WPF\AsyncRelayCommand.cs" />
     <Compile Include="WPF\BaseCommand.cs" />
     <Compile Include="WPF\BaseViewModel.cs" />

@@ -1,7 +1,5 @@
 ﻿using System.Windows.Data;
 using System.Windows.Input;
-using OverRay.Hook.Types;
-using OverRay.Hook.Utils;
 using OverRay.UI.WPF;
 
 namespace OverRay.UI
@@ -12,21 +10,23 @@ namespace OverRay.UI
         {
             AttachCommand = new RelayCommand(AttachToProcess);
 
-            HookManager = new HookManager("OverRay.Hook.dll", "Rayman2", "Rayman2.exe", "Rayman2.exe.noshim");
-            BindingOperations.EnableCollectionSynchronization(Log.Messages, this);
+            Logger = new Logger(1000);
+            BindingOperations.EnableCollectionSynchronization(Messages, this);
 
+            HookManager = new HookManager("OverRay.Hook.dll", Logger, "Rayman2", "Rayman2.exe", "Rayman2.exe.noshim");
             AttachToProcess();
         }
 
         public ICommand AttachCommand { get; }
 
         private HookManager HookManager { get; }
-        public ObservableQueue<string> Messages => Log.Messages;
+        private Logger Logger { get; }
+        public ObservableQueue<string> Messages => Logger.Messages;
 
         public bool IsLogPaused
         {
-            get => Log.IsPaused;
-            set => Log.IsPaused = value;
+            get => Logger.IsPaused;
+            set => Logger.IsPaused = value;
         }
 
         private void AttachToProcess()
