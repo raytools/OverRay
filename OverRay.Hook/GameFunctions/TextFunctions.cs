@@ -10,13 +10,13 @@ namespace OverRay.Hook.GameFunctions
     {
         public TextFunctions()
         {
-            TextActions = new Dictionary<string, Action>();
+            Actions = new Dictionary<string, Action>();
 
             DrawsTexts = new GameFunction<FDrawsTexts>(0x460670, HDrawsTexts);
             DrawText = new GameFunction<FDrawText>(0x4660B0, HDrawText);
         }
 
-        public Dictionary<string, Action> TextActions { get; }
+        public Dictionary<string, Action> Actions { get; }
 
         #region DrawsTexts
 
@@ -29,9 +29,9 @@ namespace OverRay.Hook.GameFunctions
         {
             try
             {
-                lock (TextActions)
+                lock (Actions)
                 {
-                    foreach (KeyValuePair<string, Action> action in TextActions)
+                    foreach (KeyValuePair<string, Action> action in Actions)
                         action.Value.Invoke();
                 }
             }

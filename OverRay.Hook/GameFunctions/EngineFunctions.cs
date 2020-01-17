@@ -9,7 +9,7 @@ namespace OverRay.Hook.GameFunctions
     {
         public EngineFunctions()
         {
-            EngineActions = new Dictionary<string, Action>();
+            Actions = new Dictionary<string, Action>();
 
             VEngine = new GameFunction<FVEngine>(0x40ADA0, HVEngine);
             GetCurrentLevelName = new GameFunction<FGetCurrentLevelName>(0x404DA0);
@@ -17,7 +17,7 @@ namespace OverRay.Hook.GameFunctions
             Code4PersoLePlusProche = new GameFunction<FCode4PersoLePlusProche>(0x476960);
         }
 
-        public Dictionary<string, Action> EngineActions { get; }
+        public Dictionary<string, Action> Actions { get; }
 
         #region VEngine
 
@@ -32,9 +32,9 @@ namespace OverRay.Hook.GameFunctions
 
             try
             {
-                lock (EngineActions)
+                lock (Actions)
                 {
-                    foreach (KeyValuePair<string, Action> action in EngineActions)
+                    foreach (KeyValuePair<string, Action> action in Actions)
                         action.Value.Invoke();
                 }
             }

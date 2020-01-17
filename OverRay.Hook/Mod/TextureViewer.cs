@@ -42,18 +42,18 @@ namespace OverRay.Hook.Mod
 
             Manager.Hud.Hide();
 
-            lock (Manager.Engine.EngineActions) Manager.Engine.EngineActions[Id] = DrawGraphics;
-            lock (Manager.Text.TextActions) Manager.Text.TextActions[Id] = DrawText;
+            Manager.Engine.Actions.Set(Id, DrawGraphics);
+            Manager.Text.Actions.Set(Id, DrawText);
         }
 
         public void Hide()
         {
-            lock (Manager.Engine.EngineActions) Manager.Engine.EngineActions[Id] = () =>
+            Manager.Engine.Actions.Set(Id, () =>
             {
                 DrawEmptyParticle();
-                Manager.Engine.EngineActions.Remove(Id);
-            };
-            lock (Manager.Text.TextActions) Manager.Text.TextActions.Remove(Id);
+                Manager.Engine.Actions.Remove(Id);
+            });
+            Manager.Text.Actions.Delete(Id);
 
             Manager.Input.ExclusiveInput = null;
             Manager.Input.EnableGameInput();

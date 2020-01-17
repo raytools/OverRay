@@ -9,15 +9,15 @@ namespace OverRay.Hook.GameFunctions
     {
         public InputFunctions()
         {
-            InputActions = new Dictionary<char, Action>();
-            InputCodeActions = new Dictionary<KeyCode, Action>();
+            Actions = new Dictionary<char, Action>();
+            KeycodeActions = new Dictionary<KeyCode, Action>();
 
             VirtualKeyToAscii = new GameFunction<FVirtualKeyToAscii>(0x496110, HVirtualKeyToAscii);
             VReadInput = new GameFunction<FVReadInput>(0x496510, HVReadInput);
         }
 
-        public Dictionary<char, Action> InputActions { get; }
-        public Dictionary<KeyCode, Action> InputCodeActions { get; }
+        public Dictionary<char, Action> Actions { get; }
+        public Dictionary<KeyCode, Action> KeycodeActions { get; }
 
         public Action<char, KeyCode> ExclusiveInput { get; set; }
 
@@ -39,12 +39,12 @@ namespace OverRay.Hook.GameFunctions
 
             if (ExclusiveInput == null)
             {
-                lock (InputActions)
+                lock (Actions)
                 {
-                    lock (InputCodeActions)
+                    lock (KeycodeActions)
                     {
-                        if (InputActions.TryGetValue((char)result, out Action action) ||
-                            InputCodeActions.TryGetValue((KeyCode)ch, out action))
+                        if (Actions.TryGetValue((char)result, out Action action) ||
+                            KeycodeActions.TryGetValue((KeyCode)ch, out action))
                             action.Invoke();
                     }
                 }
@@ -75,7 +75,7 @@ namespace OverRay.Hook.GameFunctions
 
         #endregion
 
-        private int dword50A560 = 0;
+        private int dword50A560;
 
         public void DisableGameInput()
         {

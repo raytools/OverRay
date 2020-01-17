@@ -45,20 +45,14 @@ namespace OverRay.Hook.Mod
 
         public void InitializeHud()
         {
-            lock (Manager.Text.TextActions)
-            {
-                Manager.Text.TextActions["coordinates"] = DrawCoordinates;
-                Manager.Text.TextActions["glm"] = DrawGlmCoordinates;
-                Manager.Text.TextActions["speed"] = DrawSpeed;
-                Manager.Text.TextActions["level"] = DrawLevelName;
-                Manager.Text.TextActions["VersionText"] = DrawVersion;
-            }
+            Manager.Text.Actions.Set("coordinates", DrawCoordinates);
+            Manager.Text.Actions.Set("glm", DrawGlmCoordinates);
+            Manager.Text.Actions.Set("speed", DrawSpeed);
+            Manager.Text.Actions.Set("level", DrawLevelName);
+            Manager.Text.Actions.Set("VersionText", DrawVersion);
 
-            lock (Manager.Engine.EngineActions)
-            {
-                Manager.Engine.EngineActions["glm"] = DrawGlmPoint;
-                Manager.Engine.EngineActions["target"] = DrawTarget;
-            }
+            Manager.Engine.Actions.Set("glm", DrawGlmPoint);
+            Manager.Engine.Actions.Set("target", DrawTarget);
         }
 
         public void Show() => Display = true;
@@ -70,9 +64,9 @@ namespace OverRay.Hook.Mod
             if (!Display) return;
 
             Vector3 coordinates = Marshal.PtrToStructure<Vector3>(Coordinates);
-            string coordinatesString = "X".KeyValue(coordinates.X.Float()).NL() +
-                                       "Y".KeyValue(coordinates.Y.Float()).NL() +
-                                       "Z".KeyValue(coordinates.Z.Float());
+            string coordinatesString = "X".KeyValue(coordinates.X.D3()).NL() +
+                                       "Y".KeyValue(coordinates.Y.D3()).NL() +
+                                       "Z".KeyValue(coordinates.Z.D3());
 
             Manager.Text.CustomText(coordinatesString, TextSize, 5, 5);
         }
@@ -82,9 +76,9 @@ namespace OverRay.Hook.Mod
             if (!Display) return;
 
             Vector3 glm = Marshal.PtrToStructure<Vector3>(Glm);
-            string glmString = "GLM".Yellow() + ":X".KeyValue(glm.X.Float()).NL() +
-                               "::::Y".KeyValue(glm.Y.Float()).NL() +
-                               "::::Z".KeyValue(glm.Z.Float());
+            string glmString = "GLM".Yellow() + ":X".KeyValue(glm.X.D3()).NL() +
+                               "::::Y".KeyValue(glm.Y.D3()).NL() +
+                               "::::Z".KeyValue(glm.Z.D3());
 
             Manager.Text.CustomText(glmString, TextSize, 280, 5);
         }
@@ -94,11 +88,10 @@ namespace OverRay.Hook.Mod
             if (!Display) return;
 
             Vector3 speed = Marshal.PtrToStructure<Vector3>(Speed);
-
-            string speedString = "Speed".Yellow().KeyValue(speed.Length.Float()).NL() +
-                                 "::::X".KeyValue(speed.X.Float()).NL() +
-                                 "::::Y".KeyValue(speed.Y.Float()).NL() +
-                                 "::::Z".KeyValue(speed.Z.Float());
+            string speedString = "Speed".Yellow().KeyValue(speed.Length.D3()).NL() +
+                                 "::::X".KeyValue(speed.X.D3()).NL() +
+                                 "::::Y".KeyValue(speed.Y.D3()).NL() +
+                                 "::::Z".KeyValue(speed.Z.D3());
 
             Manager.Text.CustomText(speedString, TextSize, 620, 5);
         }

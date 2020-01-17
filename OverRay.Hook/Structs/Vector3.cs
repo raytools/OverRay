@@ -19,6 +19,6 @@ namespace OverRay.Hook.Structs
 
         public static Vector3 Zero = new Vector3(0, 0, 0);
 
-        public float Length => (float) Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
+        public double Length => Math.Sqrt(Math.Pow(X, 2) + Math.Pow(Y, 2) + Math.Pow(Z, 2));
     }
 }

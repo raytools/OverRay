@@ -2,26 +2,27 @@
 
 namespace OverRay.Hook.Mod
 {
-    public class MenuItem
+    public struct MenuItem
     {
         public MenuItem(string name, Action action)
         {
             Name = name;
             Action = action;
             IsSubmenu = false;
+            Submenu = null;
         }
 
         public MenuItem(string name, Menu submenu)
         {
             Name = name;
-            Submenu = submenu;
+            Action = null;
             IsSubmenu = true;
+            Submenu = submenu;
         }
 
-        public string Name { get; }
-        public bool IsSubmenu { get; }
-
-        public Action Action { get; }
-        public Menu Submenu { get; }
+        public string Name;
+        public Action Action;
+        public bool IsSubmenu;
+        public Menu Submenu;
     }
 }

@@ -11,7 +11,6 @@ namespace OverRay.Hook
     {
         public Detour(RemoteHooking.IContext context, string channelName)
         {
-            //Debugger.Launch();
             Interface = RemoteHooking.IpcConnectClient<RemoteInterface>(channelName);
             Interface.Injected(RemoteHooking.GetCurrentProcessId());
         }

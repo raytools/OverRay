@@ -50,14 +50,14 @@ namespace OverRay.Hook.Mod
             Manager.Input.DisableGameInput();
             Manager.Input.ExclusiveInput = ProcessInput;
 
-            lock (Manager.Engine.EngineActions) Manager.Engine.EngineActions[Id] = DrawGraphics;
-            lock (Manager.Text.TextActions) Manager.Text.TextActions[Id] = DrawText;
+            Manager.Engine.Actions.Set(Id, DrawGraphics);
+            Manager.Text.Actions.Set(Id, DrawText);
         }
 
         public void Hide()
         {
-            lock (Manager.Engine.EngineActions) Manager.Engine.EngineActions.Remove(Id);
-            lock (Manager.Text.TextActions) Manager.Text.TextActions.Remove(Id);
+            Manager.Engine.Actions.Delete(Id);
+            Manager.Text.Actions.Delete(Id);
 
             Manager.Input.ExclusiveInput = null;
             Manager.Input.EnableGameInput();

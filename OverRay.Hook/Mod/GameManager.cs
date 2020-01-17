@@ -61,8 +61,8 @@ namespace OverRay.Hook.Mod
                 })
             );
 
-            lock (Input.InputActions) Input.InputActions['m'] = () => MainMenu.Show();
-            lock (Text.TextActions) Text.TextActions["menutip"] = () => Text.CustomText("M".Yellow() + " - menu", 9, 850, 970);
+            Input.Actions.Set('m', () => MainMenu.Show());
+            Text.Actions.Set("menutip", () => Text.CustomText("M".Yellow() + " - menu", 9, 850, 970));
         }
 
         private void InitLevelMenu()
